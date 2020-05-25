@@ -4469,15 +4469,36 @@ function Line$1(_ref) {
   var renderedPath = usePropsMemo(function () {
     return React.createElement(Path$1, pathProps);
   }, pathProps);
+
+  var showShadow = !!style.showShadow;
+  var shadowPath = React.useMemo(function () {
+    var xValues = series.datums.map(next => next.anchor.x);
+    var yValues = series.datums.map(next => next.anchor.y);
+    var _xMin = Math.min(...xValues);
+    var _xMax = Math.max(...xValues);
+    var _yMax = Math.max(...yValues);
+
+    return path + " L" + _xMax + "," + _yMax + " L" + _xMin + "," + _yMax + "Z";
+  }, [path]);
+  var shadowPathProps = {
+    d: shadowPath,
+    style: _objectSpread2({}, pathDefaultStyle, {}, style, {}, style.line, {
+      stroke: "none"
+    })
+  };
+  var renderedShadowPathProps = usePropsMemo(function () {
+    return React.createElement(Path$1, shadowPathProps);
+  }, shadowPathProps);
+
   return React.useMemo(function () {
-    return React.createElement("g", null, renderedPath, showPoints && series.datums.map(function (datum, i) {
+    return React.createElement("g", null, renderedPath, showShadow && renderedShadowPathProps, showPoints && series.datums.map(function (datum, i) {
       return React.createElement(Point, {
         key: i,
         datum: datum,
         style: style
       });
     }));
-  }, [renderedPath, series.datums, showPoints, style]);
+  }, [renderedPath, renderedShadowPathProps, series.datums, showPoints, style]);
 }
 Line$1.defaultProps = {
   curve: monotoneX
