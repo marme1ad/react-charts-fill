@@ -1,0 +1,12 @@
+{
+  "name": "@marme1ad/react-charts-fill",
+  "version": "1.0.0",
+  "homepage": "https://github.com/marme1ad/react-charts-fill#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marme1ad/react-charts-fill.git"
+  },
+  "private": false,
+  "main": "index.js",
+  "license": "MIT"
+}
